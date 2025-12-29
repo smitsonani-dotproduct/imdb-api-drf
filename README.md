@@ -13,10 +13,10 @@ A Django REST Framework-based API for building a movie watchlist application ins
 
 ## Technology Stack
 
-- **Backend**: Django 3.x+
+- **Backend**: Django 6.0
 - **API**: Django REST Framework
 - **Database**: SQLite (default, configurable)
-- **Python**: 3.8+
+- **Python**: 3.14
 
 ## Project Structure
 
@@ -35,12 +35,6 @@ imdb_clone/
 ```
 
 ## Database Models
-
-### Movie
-- Title
-- Description
-- Release Date
-- Streaming Platforms
 
 ### StreamPlatform
 - Name
