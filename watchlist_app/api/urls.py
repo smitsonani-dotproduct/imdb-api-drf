@@ -43,7 +43,7 @@ urlpatterns = [
     # ),
     # path("watch/review/list", view=ReviewList.as_view(), name="reviews-list"),
     path(
-        "watch/<int:pk>/review/create",
+        "watch/<int:pk>/review/create/",
         view=ReviewCreate.as_view(),
         name="review-create",
     ),

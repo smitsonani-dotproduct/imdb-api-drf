@@ -17,6 +17,8 @@ class WatchList(models.Model):
     description = models.CharField(max_length=200)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    avg_rating = models.FloatField(default=0)
+    total_rating = models.IntegerField(default=0)
     platform = models.ForeignKey(
         StreamPlatform, on_delete=models.CASCADE, related_name="watchlist"
     )
@@ -34,7 +36,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     watchlist = models.ForeignKey(
-        WatchList, on_delete=models.CASCADE, related_name="review"
+        WatchList, on_delete=models.CASCADE, related_name="reviews"
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import generics, mixins, status, viewsets
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permissions import AdminOrReadOnly, ReviewUserOrReadOnly
 
 
 class WatchListAV(APIView):
@@ -240,10 +242,25 @@ class ReviewCreate(generics.CreateAPIView):
                 "You have already submitted the review for this movie!"
             )
 
+        if watchlist.total_rating == 0:
+            watchlist.avg_rating = serializer.validated_data["rating"]
+        else:
+            print(
+                "avg rate, current rate :)",
+                watchlist.avg_rating,
+                serializer.validated_data["rating"],
+            )
+            watchlist.avg_rating = (
+                watchlist.avg_rating + serializer.validated_data["rating"]
+            ) / 2
+        watchlist.total_rating = watchlist.total_rating + 1
+        watchlist.save()
+
         serializer.save(watchlist=watchlist, user=review_user)
 
 
 class ReviewList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ReviewSerializer
 
     # over-riding exising method
@@ -253,6 +270,9 @@ class ReviewList(generics.ListAPIView):
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    # permission_classes = [IsAuthenticatedOrReadOnly, AdminOrReadOnly]
+    # permission_classes = [AdminOrReadOnly]
+    permission_classes = [ReviewUserOrReadOnly]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
