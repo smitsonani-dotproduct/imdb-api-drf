@@ -12,6 +12,8 @@ from watchlist_app.api.views import (
     ReviewDetail,
     ReviewCreate,
     StreamPlatformViewset,
+    UserReview,
+    WatchListGV,
 )
 
 # urlpatterns = [
@@ -30,6 +32,7 @@ router.register("stream", viewset=StreamPlatformViewset, basename="streamplatfor
 urlpatterns = [
     path("watch/list/", view=WatchListAV.as_view(), name="watch-list"),
     path("watch/<int:pk>/", view=WatchDetailAV.as_view(), name="watch-detail"),
+    path("watch/list2/", view=WatchListGV.as_view(), name="watch-list"),
     path("", include(router.urls)),
     # path(
     #     "stream/list/",
@@ -52,5 +55,15 @@ urlpatterns = [
         "watch/review/<int:pk>/",
         view=ReviewDetail.as_view(),
         name="review-detail",
+    ),
+    path(
+        "watch/review/<str:username>/",
+        view=UserReview.as_view(),
+        name="user-review-detail",
+    ),
+    path(
+        "watch/reviews/",
+        view=UserReview.as_view(),
+        name="user-review-detail",
     ),
 ]

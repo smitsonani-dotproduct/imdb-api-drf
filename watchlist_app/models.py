@@ -41,7 +41,9 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.rating) + "  |  " + self.watchlist.title
+        return (
+            str(self.rating) + "  |  " + self.watchlist.title + "  |  " + str(self.user)
+        )
 
 
 # class Movie(models.Model):
